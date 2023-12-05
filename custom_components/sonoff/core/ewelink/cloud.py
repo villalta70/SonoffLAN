@@ -106,7 +106,7 @@ class XRegistryCloud(ResponseWaiter, XRegistryBase):
     def token(self) -> str:
         return self.region + ":" + self.auth["at"]
 
-    async def login(self, username: str, password: str, app=0) -> bool:
+    async def login(self, username: str, password: str, app=1) -> bool:
         if username == "token":
             self.region, token = password.split(":")
             return await self.login_token(token, 1)
@@ -155,7 +155,7 @@ class XRegistryCloud(ResponseWaiter, XRegistryBase):
 
         return True
 
-    async def login_token(self, token: str, app: int = 0) -> bool:
+    async def login_token(self, token: str, app: int = 1) -> bool:
         appid = APP[app][0]
         headers = {"Authorization": "Bearer " + token, "X-CK-Appid": appid}
         r = await self.session.get(
